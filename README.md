@@ -184,6 +184,8 @@ volumes:
 
 ## Step 6:  Gunicorn
 
+### Setperate docker-compose.yml and docker-compose.prod.yml
+
 ### Install gunicorn
 ```zsh
 pip install gunicorn
@@ -197,6 +199,12 @@ CMD ["gunicorn", "--bind", "0.0.0.0:8000", "todo_project.wsgi:application"]
 ```docker-compose.yml
 command: gunicorn todo_project.wsgi:application --bind 0.0.0.0:8000
 ```
+Note : To run production compose file
+
+```zsh
+docker-compose -f docker-compose.prod.yml up -d --build
+
+```
 Checkpoint: Start server to see if gunicorn is running properly or not. 
 
 ```zsh
@@ -205,6 +213,10 @@ Checkpoint: Start server to see if gunicorn is running properly or not.
 
 -----------------------------------------------------------------------------------------------
 
-## Step 6:  Gunicorn
+## Step 6:  Nginx
 
-### Install gunicorn
+### Create a nginx.conf file
+
+```nginx
+
+```
