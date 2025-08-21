@@ -184,7 +184,27 @@ volumes:
 
 ## Step 6:  Gunicorn
 
+### Install gunicorn
 ```zsh
 pip install gunicorn
 ```
+### Update Dockerfile and docker-compose.yml
 
+```Dockerfile
+#Production
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "todo_project.wsgi:application"]
+```
+```docker-compose.yml
+command: gunicorn todo_project.wsgi:application --bind 0.0.0.0:8000
+```
+Checkpoint: Start server to see if gunicorn is running properly or not. 
+
+```zsh
+ python manage.py runserver
+ ```
+
+-----------------------------------------------------------------------------------------------
+
+## Step 6:  Gunicorn
+
+### Install gunicorn

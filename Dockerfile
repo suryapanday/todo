@@ -24,5 +24,4 @@ COPY . .
 # CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
 
 #Production
-
 CMD ["gunicorn", "--bind", "0.0.0.0:8000", "todo_project.wsgi:application"]
