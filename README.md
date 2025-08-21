@@ -104,3 +104,77 @@ python manage.py createsuperuser
  ```zsh
  python manage.py runserver
  ```
+
+-----------------------------------------------------------------------------------------------
+
+
+## Step 5:  Docker
+
+### Simply run django app using docker
+
+We need two files, Dockerfile and docker-compose.yml
+
+```zsh
+touch Dockerfile && touch docker-compose.yml
+```
+### Basic Dockerfile
+
+```Dockerfile
+# Base image
+FROM python:3.12-slim
+
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+# Set workdir
+WORKDIR /app
+
+# Install system deps
+RUN apt-get update && apt-get install -y \
+    libpq-dev gcc \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Python deps
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy project
+COPY . .
+
+# Run Django server (for dev)
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+
+```
+
+### Basic docker-compose.yml
+
+```docker compose.yml
+
+services:
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    depends_on:
+      - db
+
+  db:
+    image: postgres:17
+    env_file:
+      - .env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  postgres_data:
+
+
+```
