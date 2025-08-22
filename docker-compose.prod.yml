@@ -5,7 +5,8 @@ services:
     # command: python manage.py runserver 0.0.0.0:8000 #dev mode only
     command: gunicorn todo_project.wsgi:application --bind 0.0.0.0:8000
     volumes:
-      - .:/app
+     - static_volume:/static
+     - media_volume:/media
     expose:
        - 8000
     env_file:
@@ -22,12 +23,19 @@ services:
     ports:
       - "5432:5432"
   nginx:
-    image: nginx:alpine
+    build:
+      context: ./nginx
     ports:
-    - "1337:80"
+    - 1337:80
     depends_on:
       - web
+    volumes:
+      - static_volume:/static
+      - media_volume:/media
+      - ./nginx/logs:/var/log/nginx
 
 
 volumes:
   postgres_data:
+  static_volume:
+  media_volume:
