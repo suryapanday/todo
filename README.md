@@ -220,3 +220,36 @@ Checkpoint: Start server to see if gunicorn is running properly or not.
 ```nginx
 
 ```
+
+
+
+## Deploy:  
+### Step 1:  AWS EC2
+Launch aws ec2 and configure elastic IP
+```zsh 
+ssh -i "mykey.pem" ubuntu@<EC2_PUBLIC_IP>
+```
+
+### Step 2:  Once you are inside ubuntu, update the packages and install necessary packages
+
+```zsh
+sudo apt update && sudo apt upgrade -y
+sudo apt install -y git curl unzip build-essential
+
+```
+This link will guide to setup docker in ubuntu
+
+https://docs.docker.com/engine/install/ubuntu/ 
+
+
+### Step 3:  Clone Your Git Repo on EC2
+Clone the repo and cd into repo
+
+
+### Step 4:  Env
+
+```zsh
+nano .env
+
+```
+
